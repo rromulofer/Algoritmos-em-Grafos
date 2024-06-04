@@ -1,22 +1,40 @@
-def busca_em_largura(grafo, inicio):
-    visitados = [False] * len(grafo)
-    fila = [inicio]
-    visitados[inicio] = True
-    caminho = []
+from collections import deque  # Importa a classe deque da biblioteca collections
 
-    while fila:
-        vertice = fila.pop(0)
-        caminho.append(vertice)
-        for vizinho in range(len(grafo)):
+def imprime_matriz(grafo):
+    """Função para imprimir a matriz de adjacência."""
+    print("Matriz de Adjacência:")
+    for linha in grafo:
+        print("  ".join(str(v) for v in linha))  # Imprime cada linha da matriz, separando os elementos por espaço
+    print()
+
+def busca_em_largura_passo_a_passo(grafo, inicio):
+    """Função para realizar a busca em largura (BFS) passo a passo."""
+    n = len(grafo)  # Obtém o número de vértices do grafo
+    visitados = [False] * n  # Cria uma lista para marcar os vértices visitados, inicialmente todos como False
+    fila = deque([inicio])  # Inicializa uma fila usando deque com o vértice inicial
+    visitados[inicio] = True  # Marca o vértice inicial como visitado
+    caminho = []  # Lista para armazenar o caminho percorrido
+
+    while fila:  # Enquanto a fila não estiver vazia
+        vertice = fila.popleft()  # Remove o primeiro elemento da fila
+        caminho.append(vertice)  # Adiciona o vértice removido ao caminho percorrido
+        
+        print(f"Visitando vértice: A{vertice + 1}")  # Imprime o vértice atual
+        imprime_matriz(grafo)  # Imprime a matriz de adjacência atualizada
+        input("Pressione Enter para continuar...")  # Aguarda o usuário pressionar Enter para continuar
+        
+        for vizinho in range(n):  # Itera sobre os vizinhos do vértice atual
+            # Se há uma conexão e o vizinho não foi visitado
             if grafo[vertice][vizinho] == 1 and not visitados[vizinho]:
-                fila.append(vizinho)
-                visitados[vizinho] = True
+                fila.append(vizinho)  # Adiciona o vizinho à fila
+                visitados[vizinho] = True  # Marca o vizinho como visitado
+                # Marca o vértice que visitou o vizinho na matriz de adjacência
+                grafo[vertice][vizinho] = f"A{vertice + 1}"
 
-    return caminho
+    return caminho  # Retorna o caminho percorrido
 
 # Matriz de adjacência fornecida
 grafo = [
-    # A1 A2 A3 A4 A5 A6 A7 A8 A9 A10
     [ 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],  # A1
     [ 1, 0, 0, 1, 1, 0, 0, 0, 0, 0],  # A2
     [ 1, 0, 0, 1, 0, 1, 0, 0, 0, 0],  # A3
@@ -29,10 +47,14 @@ grafo = [
     [ 0, 0, 0, 0, 0, 0, 0, 1, 1, 0]   # A10
 ]
 
-vertice_inicial = 0  # Começa a busca no vértice A1 (índice 0)
-caminho = busca_em_largura(grafo, vertice_inicial)
+# Define o vértice inicial (A1, que corresponde ao índice 0)
+vertice_inicial = 0
 
-# Converte os índices para a nomenclatura A1, A2, ..., A10
+# Executa a busca em largura a partir do vértice inicial
+caminho = busca_em_largura_passo_a_passo(grafo, vertice_inicial)
+
+# Converte os índices no caminho para a nomenclatura A1, A2, ..., A10
 caminho_nomenclatura = ["A" + str(vertice + 1) for vertice in caminho]
 
+# Imprime o caminho percorrido pela busca em largura
 print("Caminho percorrido pela busca em largura:", caminho_nomenclatura)
