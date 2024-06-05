@@ -4,11 +4,11 @@ def imprime_matriz(grafo):
     """Função para imprimir a matriz de adjacência."""
     print("Matriz de Adjacência:")
     for linha in grafo:
-        print("  ".join(str(v) for v in linha))  # Imprime cada linha da matriz, separando os elementos por espaço
+        print("  ".join(str(v) for v in linha))  # Imprime cada linha da matriz
     print()
 
 def busca_em_largura_passo_a_passo(grafo, inicio):
-    """Função para realizar a busca em largura (BFS) passo a passo."""
+    """Função para realizar a busca em largura."""
     n = len(grafo)  # Obtém o número de vértices do grafo
     visitados = [False] * n  # Cria uma lista para marcar os vértices visitados, inicialmente todos como False
     fila = deque([inicio])  # Inicializa uma fila usando deque com o vértice inicial
